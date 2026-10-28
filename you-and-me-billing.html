@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>You & Me Cafe · Billing</title>
+<style>
+:root{--bg:#fff7ec;--bg2:#ffffff;--in:#fffaf2;--ln:#f1dcc3;--cream:#1f2347;--or:#ff5a4e;--gold:#d97706;--red:#ff3d7f;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}*,*:before,*:after{box-sizing:inherit}body{margin:0;background:var(--bg);color:var(--cream);font:16px/1.45 'DM Sans',system-ui,sans-serif}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+input,select{background:var(--in);border:1px solid var(--ln);border-radius:12px;padding:12px 14px;min-width:0;width:100%}input:focus,select:focus{outline:2px solid var(--or);border-color:transparent}
+.btn{background:var(--bg2);border:1px solid var(--ln);border-radius:12px;padding:12px 18px;min-height:46px;transition:.2s}.btn:hover{border-color:var(--or)}
+.pri{background:linear-gradient(135deg,var(--or),var(--red));border:0;font-weight:700;color:#fff}.big{flex:2;font-size:1.05rem}
+#lock{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);z-index:50;text-align:center;padding:20px}#lock>div{max-width:340px;width:100%}#lock h1{font-family:Impact,sans-serif;color:var(--gold);letter-spacing:.06em}#lock p{opacity:.7;font-size:.85rem}
+header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--ln);flex-wrap:wrap}
+header b{font-family:Impact,sans-serif;color:var(--gold);font-size:1.4rem;letter-spacing:.06em}.tabs{display:flex;gap:8px}.tabs .on{background:var(--or);color:#fff;border-color:var(--or)}
+#pos{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:32px;padding:28px;max-width:1440px;margin:auto;align-items:start}#pos>section{min-width:0}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:16px 0 20px}.chips .btn{white-space:nowrap;border-radius:99px;padding:9px 18px;min-height:40px}.chips .on{background:var(--or);color:#fff;border-color:var(--or);font-weight:600}
+#items{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr));gap:14px}
+.it{text-align:left;background:var(--bg2);border:1px solid var(--ln);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;min-height:104px;justify-content:space-between;transition:.2s;font-size:.98rem}.it:hover{border-color:var(--or);transform:translateY(-3px);box-shadow:0 12px 30px -12px rgba(255,90,78,.5)}.it b{color:var(--gold);font-size:1.1rem}
+.bill{background:var(--bg2);border:1px solid var(--ln);border-radius:24px;padding:24px;position:sticky;top:16px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 32px);overflow:auto}.bill>*{flex-shrink:0}.bt{margin:0;font-size:1.3rem}
+#cart{min-height:70px}.ln{padding:14px 0;border-bottom:1px solid var(--ln)}.lt{display:flex;justify-content:space-between;gap:12px;font-weight:600}.lt b{color:var(--gold);white-space:nowrap}
+.c{display:flex;gap:12px;align-items:center;margin-top:10px}.stp{display:flex;align-items:center;gap:10px;background:var(--in);border-radius:12px;padding:4px}.stp b{min-width:22px;text-align:center}.q{width:40px;min-height:40px;padding:0;border-radius:10px}
+.c label{display:flex;align-items:center;gap:6px;flex:1;opacity:.9}.c input{padding:9px 10px}.x{margin-left:auto}
+.seg{display:flex;gap:8px}.seg button{flex:1;background:var(--in);border:1px solid var(--ln);border-radius:12px;padding:12px;min-height:46px}.seg .on{background:var(--or);color:#fff;border-color:var(--or);font-weight:700}
+details{background:var(--in);border-radius:14px;padding:14px 16px}summary{cursor:pointer;font-weight:600}details[open] summary{margin-bottom:12px}
+.row2{display:flex;gap:10px;margin:8px 0}.row2>*{flex:1}
+.tr{display:flex;justify-content:space-between;padding:5px 0;opacity:.85}.tot{font-size:1.7rem;color:var(--gold);font-weight:700;border-top:1px solid var(--ln);margin-top:8px;padding-top:14px;opacity:1}
+.bar{display:none}.it,.bill,.panel,.st div,.bh,.info div{box-shadow:0 8px 24px -14px rgba(31,35,71,.35)}
+#hist{padding:28px;max-width:960px;margin:auto}.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:18px 0 26px}.st div{background:var(--bg2);border:1px solid var(--ln);border-radius:16px;padding:18px}.st b{display:block;font-size:1.5rem;color:var(--gold)}
+.bh{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--ln);border-radius:14px;padding:14px 16px;margin:10px 0;flex-wrap:wrap}
+.ov{position:fixed;inset:0;background:rgba(31,35,71,.6);display:none;place-items:center;z-index:40;padding:16px;overflow:auto}
+#rcpt{background:#fff;color:#000;width:300px;padding:16px;font:13px/1.4 monospace;margin-bottom:12px}#rcpt h3{text-align:center;margin:0}#rcpt table{width:100%;border-collapse:collapse}#rcpt td{padding:2px 0;vertical-align:top}#rcpt .r{text-align:right}#rcpt hr{border:0;border-top:1px dashed #000}
+@media(max-width:900px){#pos{grid-template-columns:minmax(0,1fr);padding:16px;gap:20px}.bill{position:static;max-height:none;padding:18px}header{padding:14px 16px}body{padding-bottom:84px}
+.bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:rgba(255,247,236,.95);backdrop-filter:blur(10px);border-top:1px solid var(--ln)}.bar b{color:var(--gold)}}
+@media print{body *{visibility:hidden}.ov{background:none;display:block!important;position:absolute}#rcpt,#rcpt *{visibility:visible}#rcpt{position:absolute;left:0;top:0;width:76mm}}
+</style></head><body>
+<div id="lock"><div><h1>YOU &amp; ME</h1><p id="lp"></p><form id="lf" autocomplete="off"><input id="pin" type="password" inputmode="numeric" maxlength="8" placeholder="PIN" style="width:100%;text-align:center"><br><br><button class="btn pri" id="go" type="submit" style="width:100%"></button></form><p id="le" style="color:#ff8a80"></p><p>Bills are saved only in this browser on this device. The PIN is a simple screen lock, not strong security.</p></div></div>
+<div id="app" hidden>
+<header><b>YOU &amp; ME · BILLING</b><div class="tabs"><button class="btn on" id="t1">Billing</button><button class="btn" id="t2">History</button><button class="btn" id="lk">Lock</button></div></header>
+<main id="pos"><section><input id="q" placeholder="Search items…" style="width:100%"><div class="chips" id="chips"></div><div id="items"></div>
+</section>
+<aside class="bill"><h2 class="bt">Current bill</h2><div id="cart"></div>
+<input id="cu" placeholder="Customer name or table">
+<div class="seg" id="pm"><button data-v="Cash" class="on">Cash</button><button data-v="UPI">UPI</button><button data-v="Card">Card</button></div>
+<details><summary>Discount &amp; GST</summary><div class="row2"><input id="dv" type="number" min="0" placeholder="Discount"><select id="dt"><option value="r">₹</option><option value="p">%</option></select></div><input id="gs" type="number" min="0" placeholder="GST % (optional)"></details>
+<details><summary>Add custom item</summary><div class="row2"><input id="cn" placeholder="Item name"><input id="cp" type="number" min="0" placeholder="Price"></div><button class="btn" id="ca" style="width:100%">Add to bill</button></details>
+<div id="tt"></div><div class="row2"><button class="btn" id="cl">Clear</button><button class="btn pri big" id="sv">Save &amp; print bill</button></div></aside></main>
+<div class="bar"><span><b id="bt"></b></span><button class="btn pri" id="vb">View bill</button></div><main id="hist" hidden><div class="st" id="st"></div><div id="bl"></div></main></div>
+<div class="ov" id="ov"><div><div id="rcpt"></div><div class="row2"><button class="btn" id="rp">Print</button><button class="btn" id="rc">Copy text</button><button class="btn" id="rx">Close</button></div></div></div>
+<script>(function(){window.addEventListener('error',function(e){var l=document.getElementById('le');if(l)l.textContent='Error: '+e.message});
+const CC={"Pizza":"#e53935","Burgers":"#e08a2c","Sandwiches":"#d4a24c","Snacks & Momos":"#ffb300","Combos":"#ff7a1a","Coffee":"#8d6e63","Milkshakes":"#e57fa3","Ice Cream":"#f5d9a8"};
+const R=(c,l)=>l.map(([n,p])=>({c,n,p:p?"₹"+p:"—",col:CC[c]}));
+const MENU=[
+...R("Pizza",[["Plain Pizza",120],["Tomato Pizza",140],["Veg Cheese Pizza",150],["Cheese Corn Pizza",180],["Double Cheese Pizza",210],["Paneer Tandoor Pizza",230],["Double Cheese Paneer Pizza",250],["Farmhouse Pizza",270],["Special You & Me Pizza",300]]),
+...R("Burgers",[["Veg Cheese Burger",70],["Cheesy Burger",80],["Heavy Cheese Burger",100],["Double Patty Burger",120],["You & Me Special Burger",150]]),
+...R("Sandwiches",[["Veg Grilled Sandwich",60],["Chocolate Sandwich",60],["Cheese Corn Sandwich",90],["Heavy Cheese Sandwich",100],["Paneer Grilled Sandwich",120],["Paneer & Corn Grilled Sandwich",130],["Special You & Me Sandwich",150]]),
+...R("Snacks & Momos",[["Simple Fries",70],["Chat Masala Fries",80],["Shabudana Patty",80],["Veggie Stick",80],["Aloo Tikki",0],["Peri Peri Fries",0],["Veg Fried Momos",80],["Paneer Fried Momos",100],["Cheese Corn Fried Momos",100],["Kurkure Momos",100]]),
+...R("Combos",[["Veg Grilled Sandwich + Cold Coffee",100],["Double Patty Burger + Cold Coffee",150],["Cheese Corn Sandwich + Chat Masala Fries",150],["Veg Cheese Pizza + Coffee with Crush",200],["Veg Cheese Pizza + Simple Fries + Cold Coffee",250]]),
+...R("Coffee",[["Plain Coffee",50],["Thick Cold Coffee",60],["Coffee with Crush",80],["Coffee with Ice Cream",100],["Coffee with Crush & Ice Cream",120]]),
+...R("Milkshakes",[["Butterscotch",70],["Chocolate",70],["Orange",70],["Mango",70],["Pineapple",70],["Strawberry",70],["Oreo Shake",90],["KitKat",90]]),
+...R("Ice Cream",[["Butterscotch",0],["Choco Chips",0],["Vanilla",0],["Black Currant",0],["Kesar Pista",0]])];
+
+const $=s=>document.querySelector(s),mem={};
+const G=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?(k in mem?mem[k]:d):JSON.parse(v)}catch(e){return k in mem?mem[k]:d}},S=(k,v)=>{mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const ITEMS=MENU.map(m=>({c:m.c,n:m.n,p:+m.p.replace(/\D/g,'')||0}));let cart=[],bills=G('bills',[]),cat='All',cur=null;
+const inr=n=>'₹'+(Math.round(n*100)/100).toString();
+// lock
+const pin=G('pin',null);$('#lp').textContent=pin?'Enter PIN to open':'First time: choose a PIN';$('#go').textContent=pin?'Unlock':'Set PIN';
+$('#lf').onsubmit=e=>{e.preventDefault();const v=$('#pin').value;if(v.length<4){$('#le').textContent='Use at least 4 digits';return}
+if(!G('pin',null)){S('pin',v)}else if(G('pin',null)!==v){$('#le').textContent='Wrong PIN';return}
+$('#lock').style.display='none';$('#app').hidden=false;$('#pin').value='';draw()};
+$('#lk').onclick=()=>{location.reload()};
+// tabs
+const tab=n=>{$('#pos').hidden=n!=1;$('#hist').hidden=n!=2;$('#t1').classList.toggle('on',n==1);$('#t2').classList.toggle('on',n==2);if(n==2)hist()};$('#t1').onclick=()=>tab(1);$('#t2').onclick=()=>tab(2);
+// items
+const cats=['All',...new Set(ITEMS.map(i=>i.c))];
+function draw(){$('#chips').innerHTML=cats.map(c=>`<button class="btn ${c==cat?'on':''}" data-c="${c}">${c}</button>`).join('');
+const q=$('#q').value.toLowerCase();$('#items').innerHTML=ITEMS.map((m,i)=>[m,i]).filter(([m])=>(cat=='All'||m.c==cat)&&m.n.toLowerCase().includes(q)).map(([m,i])=>`<button class="it" data-i="${i}"><span>${m.n}</span><b>${m.p?inr(m.p):'set price'}</b></button>`).join('');cartUI()}
+$('#chips').onclick=e=>{const c=e.target.dataset.c;if(c){cat=c;draw()}};$('#q').oninput=draw;
+$('#items').onclick=e=>{const b=e.target.closest('.it');if(!b)return;add(ITEMS[+b.dataset.i])};
+function add(m){const l=cart.find(x=>x.n==m.n&&x.p==m.p);l?l.q++:cart.push({n:m.n,p:m.p,q:1});cartUI()}
+$('#ca').onclick=()=>{const n=$('#cn').value.trim();if(!n)return;add({n,p:+$('#cp').value||0});$('#cn').value=$('#cp').value=''};
+// cart
+const calc=()=>{const sub=cart.reduce((a,l)=>a+l.p*l.q,0),dv=+$('#dv').value||0,d=Math.min(sub,$('#dt').value=='p'?sub*dv/100:dv),g=(sub-d)*(+$('#gs').value||0)/100;return{sub,d,g,total:sub-d+g}};
+function cartUI(){$('#cart').innerHTML=cart.length?cart.map((l,i)=>`<div class="ln"><div class="lt"><span>${l.n.replace(/</g,'&lt;')}</span><b>${inr(l.p*l.q)}</b></div><div class="c" data-i="${i}"><div class="stp"><button class="btn q" data-a="-">−</button><b>${l.q}</b><button class="btn q" data-a="+">+</button></div><label>₹<input type="number" min="0" value="${l.p}" data-a="p"></label><button class="btn q x" data-a="x" aria-label="Remove">✕</button></div></div>`).join(''):'<p style="opacity:.6;margin:8px 0">Tap items on the left to add them.</p>';
+const t=calc();$('#tt').innerHTML=`<div class="tr"><span>Subtotal</span><span>${inr(t.sub)}</span></div>${t.d?`<div class="tr"><span>Discount</span><span>−${inr(t.d)}</span></div>`:''}${t.g?`<div class="tr"><span>GST</span><span>${inr(t.g)}</span></div>`:''}<div class="tr tot"><span>Total</span><span>${inr(t.total)}</span></div>`;$('#bt').textContent=cart.reduce((x,l)=>x+l.q,0)+' items · '+inr(t.total)}
+$('#cart').onclick=e=>{const c=e.target.closest('.c'),a=e.target.dataset.a;if(!c||!a||a=='p')return;const l=cart[+c.dataset.i];if(a=='+')l.q++;if(a=='-'&&--l.q<1)cart.splice(+c.dataset.i,1);if(a=='x')cart.splice(+c.dataset.i,1);cartUI()};
+$('#cart').onchange=e=>{if(e.target.dataset.a=='p'){cart[+e.target.closest('.c').dataset.i].p=+e.target.value||0;cartUI()}};
+['dv','dt','gs'].forEach(id=>$('#'+id).oninput=cartUI);
+$('#cl').onclick=()=>{cart=[];cartUI()};
+let pmv='Cash';$('#pm').onclick=e=>{const v=e.target.dataset.v;if(v){pmv=v;[...$('#pm').children].forEach(b=>b.classList.toggle('on',b.dataset.v==v))}};$('#vb').onclick=()=>document.querySelector('.bill').scrollIntoView({behavior:'smooth'});
+$('#sv').onclick=()=>{if(!cart.length)return;const t=calc(),no=G('no',0)+1;S('no',no);const b={no,t:Date.now(),cu:$('#cu').value.trim(),pm:pmv,lines:cart,...t};bills.unshift(b);S('bills',bills);cart=[];$('#cu').value=$('#dv').value=$('#gs').value='';cartUI();show(b)};
+// receipt
+const txt=b=>['YOU & ME CAFE','Pusad Road, Umarkhed','Ph: 9765411869 / 7066726236','Bill #'+b.no+'  '+new Date(b.t).toLocaleString('en-IN'),b.cu?'To: '+b.cu:'','--------------------------------',...b.lines.map(l=>l.n+' '+l.q+' x '+l.p+' = '+inr(l.p*l.q)),'--------------------------------','Subtotal '+inr(b.sub),b.d?'Discount -'+inr(b.d):'',b.g?'GST '+inr(b.g):'','TOTAL '+inr(b.total),'Paid by '+b.pm,'Thank you! Visit again.'].filter(Boolean).join('\n');
+function show(b){cur=b;$('#rcpt').innerHTML=`<h3>YOU &amp; ME CAFE</h3><div style="text-align:center">Pusad Road, Umarkhed<br>9765411869 / 7066726236</div><hr>Bill #${b.no} · ${new Date(b.t).toLocaleString('en-IN')}${b.cu?'<br>To: '+b.cu.replace(/</g,'&lt;'):''}<hr><table>${b.lines.map(l=>`<tr><td>${l.n.replace(/</g,'&lt;')}<br>${l.q} × ${l.p}</td><td class="r">${inr(l.p*l.q)}</td></tr>`).join('')}</table><hr><table><tr><td>Subtotal</td><td class="r">${inr(b.sub)}</td></tr>${b.d?`<tr><td>Discount</td><td class="r">−${inr(b.d)}</td></tr>`:''}${b.g?`<tr><td>GST</td><td class="r">${inr(b.g)}</td></tr>`:''}<tr><td><b>TOTAL</b></td><td class="r"><b>${inr(b.total)}</b></td></tr></table><hr>Paid by ${b.pm}<br><div style="text-align:center">Thank you! Visit again.</div>`;$('#ov').style.display='grid'}
+$('#rx').onclick=()=>$('#ov').style.display='none';$('#rp').onclick=()=>{try{window.print()}catch(e){}};
+$('#rc').onclick=async()=>{try{await navigator.clipboard.writeText(txt(cur));$('#rc').textContent='Copied'}catch(e){$('#rc').textContent='Copy blocked'}setTimeout(()=>$('#rc').textContent='Copy text',1500)};
+// history
+function hist(){const d=new Date().toDateString(),td=bills.filter(b=>new Date(b.t).toDateString()==d),sum=a=>a.reduce((x,b)=>x+b.total,0);
+$('#st').innerHTML=`<div>Today’s bills<b>${td.length}</b></div><div>Today’s sales<b>${inr(sum(td))}</b></div>${['Cash','UPI','Card'].map(m=>`<div>${m}<b>${inr(sum(td.filter(b=>b.pm==m)))}</b></div>`).join('')}<div>All-time sales<b>${inr(sum(bills))}</b></div>`;
+$('#bl').innerHTML=bills.length?bills.map((b,i)=>`<div class="bh"><span>#${b.no} · ${new Date(b.t).toLocaleString('en-IN')} · ${b.cu||'—'} · ${b.pm}</span><b>${inr(b.total)}</b><span><button class="btn" data-v="${i}">View</button> <button class="btn" data-x="${i}">Delete</button></span></div>`).join(''):'<p style="opacity:.6">No bills yet.</p>'}
+$('#bl').onclick=e=>{const v=e.target.dataset.v,x=e.target.dataset.x;if(v!==undefined)show(bills[+v]);if(x!==undefined){if(e.target.dataset.s){bills.splice(+x,1);S('bills',bills);hist()}else{e.target.dataset.s=1;e.target.textContent='Sure?'}}};
+})();</script></body></html>
